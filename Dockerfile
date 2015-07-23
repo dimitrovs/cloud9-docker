@@ -2,6 +2,11 @@ FROM debian:jessie
 
 MAINTAINER <stefan@dimitrov.li>
 
+ENV PORT=8181
+ENV HOST=0.0.0.0
+ENV USERNAME=''
+ENV PASSWORD=''
+
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
@@ -25,8 +30,6 @@ RUN npm cache clean
 
 RUN mkdir /workspace
 VOLUME /workspace
-EXPOSE 8181
+EXPOSE $PORT
 
-#ENTRYPOINT ["forever", "server.js", "-p", "8181", "-l", "0.0.0.0", "-w", "/workspace"]
-ENTRYPOINT ["node", "server.js", "-p", "8181", "-l", "0.0.0.0", "-w", "/workspace"]
-
+ENTRYPOINT forever server.js -p $PORT -l $HOST -w /workspace -a $USERNAME:$PASSWORD
