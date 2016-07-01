@@ -32,4 +32,5 @@ RUN mkdir /workspace
 VOLUME /workspace
 EXPOSE $PORT
 
-ENTRYPOINT forever server.js -p $PORT -l $HOST -w /workspace -a $USERNAME:$PASSWORD
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
